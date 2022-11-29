@@ -1,13 +1,9 @@
 function createStorage() {
     let countries = [];
 return {
-    setCountriesBackup: function(newCountries) {
-    return countries = newCountries;
-    },
-    getCountriesBackup: function() {
-    return countries;
-    }
-}
+    setCountriesBackup: newCountries => countries = newCountries,
+    getCountriesBackup: () => countries
+    };
 }
 
 let store = createStorage();
@@ -20,14 +16,12 @@ tabCountries.innerHTML = `<thead><tr><th>Name</th><th>Population</th><th>Area</t
     document.querySelector("#countries").append(tabCountries);
 
 function renderCountries(restCountries) {
-    htmlStr = restCountries.reduce((acc, country) => {
-        return acc + `<tr>
-            <td>${country.name}</td>
-            <td>${country.area}</td>
-            <td>${country.region}</td>
-            <td>${country.population}</td>
-        </tr>` 
-    }, '');
+    htmlStr = restCountries.reduce((acc, country) => acc + `<tr>
+        <td>${country.name}</td>
+        <td>${country.area}</td>
+        <td>${country.region}</td>
+        <td>${country.population}</td>
+    </tr>`, '');
 
     document.querySelector("tbody").innerHTML = htmlStr;
     
@@ -35,7 +29,7 @@ function renderCountries(restCountries) {
 function getCountries() {
     fetch('https://restcountries.com/v2/all')
     .then(res => res.json())
-    .then(function(data) {
+    .then(data => {
         const filteredData = data.map((el) => {
             return {
                 name: el.name,
@@ -52,7 +46,7 @@ function getCountries() {
 function getCountryName(nameCountry) {
     fetch(`https://restcountries.com/v2/name/${nameCountry}`)
     .then(res => res.json())
-    .then(function(data) {
+    .then(data => {
         const filteredData = data.map((el) => {
             return {
                 name: el.name,
